@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 )
@@ -12,8 +13,11 @@ func Helloworld(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleRequests() {
-	http.HandleFunc("/helloworld", Helloworld)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	//Creates a new instance of a mux router
+	pRouter := mux.NewRouter().StrictSlash(true)
+	// replace http.HandleFunc
+	pRouter.HandleFunc("/helloworld", Helloworld)
+	log.Fatal(http.ListenAndServe(":8080", pRouter))
 
 }
 
